@@ -36,5 +36,25 @@ class FuncMat
     
     return cosseno;
   }
+    
+        double ln(double umMaisX)
+  {
+    double x = umMaisX - 1;
+    int n = 1;
+    double ln = 0;
+    double termo = x;
+    
+    //for (int n=1; (termo*termo) >= (epsilon * epsilon); n=n+2) 
+    while ((termo*termo) >= (epsilon * epsilon))
+    {
+      ln = ln + termo;
+      n = n + 2;
+      termo = -termo*x/n;
+    }
+    
+    return ln;
+  }
+        
+  
   
 }
