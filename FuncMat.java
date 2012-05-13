@@ -48,13 +48,13 @@ class FuncMat
     while ((termo*termo) >= (epsilon * epsilon))
     {
       ln = ln + termo;
-      n = n + 2;
+      n = n + 1;
       termo = -termo*x/n;
+      System.out.println(termo);
     }
     
     return ln;
   }
         
-  //teste de gitHub no mac
   
 }
