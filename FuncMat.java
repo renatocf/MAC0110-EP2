@@ -1,6 +1,16 @@
 class FuncMat 
 {
+  
+  //Lembrete: pensar em trocar os while's por for's.
+  
   double epsilon = 10e-8;
+  
+  void carregaEpsilon (double e) //Método usado para o usuário definir quantas casas decimais de precisão ele quer nas contas.
+  { 
+    
+    epsilon = e; //A variável global "epsilon" recebe o valor "e" que o usuário quiser.
+                 //A partir daí, todas as contas serão feitas usando o novo epsilon.
+  }
   
   double sen(double x)
   {
@@ -30,7 +40,7 @@ class FuncMat
     {
       cosseno = cosseno + termo;
       n = n + 2;
-      termo = -termo*x/n;
+      termo = -termo*x*x/n; //Corrigi a fórmula adicionando "*x" nessa linha, de acordo com o que o professor corrigiu no Paca.
     }
     
     return cosseno;
