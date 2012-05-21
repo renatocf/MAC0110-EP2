@@ -1,0 +1,4 @@
+class TesteDeDesempenho
+{
+  double[] temposFunçõesComDouble;
+}
