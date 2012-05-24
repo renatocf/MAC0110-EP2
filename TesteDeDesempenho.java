@@ -22,23 +22,49 @@ class TesteDeDesempenho
    */
   
   double[][] estatísticas = new double[5][2];
-  double pi = 3.141592653589793238462643;
-  FunçõesMatemáticas função = new FunçõesMatemáticas();
+  /* Este vetor armazena, dentro de si, os dados esta-
+   * tísticos (média e desvio-padrão) relativos aos 100
+   * testes realizados dentro da classe. Na primeira li-
+   * nha, ficam guardados os dados de média relativa às
+   * cinco funções - seno (em [0][0]), cosseno ([1][0]),
+   * ln ([2][0]), raiz ([3][0]) e senoFloat ([4][0]).
+   */
   
+  double pi = 3.141592653589793238462643;
+  // Este atributo contém pi com 24 dígitos
+  
+  FunçõesMatemáticas função = new FunçõesMatemáticas();
+  /*   Instanciamos um objeto da classe 'FunçõesMatemáticas'
+   * para testar os tempos das funções executadas com valo-
+   * res pré-definidos (estes valores são o intervalo do do-
+   * mínio no qual as funções podem ser executadas dividido
+   * por 100, de modo a criar um um acréscimo constante de
+   * um valor para o seguinte).
+   */
   
   
   void carregaTemposSeno()
   {
-    double tempoInicial;
-    double tempoFinal;
+    double tempoInicial; // O tempo, registrado pelo reló-
+                         // gio interno do computador, antes
+                         // de executar a função.
+    double tempoFinal; // O tempo, registrado pelo reló-
+                       // gio interno do computador, depois
+                       // de executar a função.
       
     for(int i=0; i < 100; i++)
     {
       double entrada = i * 2 * pi / 100;
+      // A entrada é calculada com base no intervalo [0, 2*pi]. Apesar da função
+      // estar definido para todo o eixo real, todos os valores de entrada vêm deste
+      // intervalo, pois a função é periódica.
       tempoInicial = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos
       função.sen(entrada);
       tempoFinal = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos
       tempos[i][0] = tempoFinal - tempoInicial;
+      // Carregando na matriz 'tempos' com o tempo de execução do método,
+      // calculado com base no tempo do relógio interno do computador final
+      // menos o tempo registrado inicialmente.
     }
   } // int carregaTemposSeno()
   
@@ -51,10 +77,14 @@ class TesteDeDesempenho
     for(int i=0; i < 100; i++)
     {
       double entrada = i * 2 * pi / 100;
-      tempoInicial = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos
+      // A entrada é calculada com base no intervalo [0, 2*pi]. Apesar da função
+      // estar definido para todo o eixo real, todos os valores de entrada vêm deste
+      // intervalo, pois a função é periódica.
+      tempoInicial = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos.
       função.cos(entrada);
-      tempoFinal = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos
+      tempoFinal = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos.
       tempos[i][1] = tempoFinal - tempoInicial;
+      // Carregando os tempos na matriz para a função cosseno.
     }
   } // int carregaTemposCosseno()
   
@@ -68,12 +98,17 @@ class TesteDeDesempenho
     for(int i=0; i < 50; i++)
     {
       double entrada = i * 2 / 100 + 0.01;
+      // A primeira parte da entrada é calculada para o intervalo [0.01, 0.99],
+      // com um total de 49 valores carregados.
       tempoInicial = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos
       função.ln(entrada);
       tempoFinal = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos
       tempos[i][2] = tempoFinal - tempoInicial;
     }
     
+    // Para incluir o valor 1.0 como entrada na função, reservamos
+    // para ele o endereço [50][3] na matriz 'tempos'. O objetivo é
+    // justamente colocar todos os valores 
     tempoInicial = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos
     função.ln(1.0);
     tempoFinal = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos
@@ -82,6 +117,8 @@ class TesteDeDesempenho
     for(int i=51; i < 100; i++)
     {
       double entrada = i * 2 / 100 + 0.01;
+      // A segunda parte da entrada é calculada para o intervalo [1.01, 1.99],
+      // com um total de 50 valores carregados.
       tempoInicial = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos
       função.ln(entrada);
       tempoFinal = System.nanoTime() / 10e6; // Divisão para transformar em milissegundos
@@ -242,5 +279,6 @@ class TesteDeDesempenho
     System.out.println("Ganho médio do uso de float no lugar de double em relação ao desvio-padrão: " + estatísticas[4][0] * 100 / estatísticas[0][0]);
 
   } // void imprimeComparativoDeSenos()
+  
   
 } // class TesteDeDesempenho

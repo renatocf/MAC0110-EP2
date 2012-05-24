@@ -38,25 +38,6 @@ class FunçõesMatemáticas
    * função específica.
    */
   
-  TesteDeDesempenho teste = new TesteDeDesempenho();
-  /**
-   *   Esta objeto 'teste' pertence a classe 'TesteDeDesempenho', 
-   * cujos métodos 'imprimeRelatórioGeralDeTempos()' e 'imprime-
-   * ComparativoDeSenos' imprimem relatórios com 100 testes cada.
-   * Os valores usados são padronizados para variar em intervalos
-   * regulares de 0.01.Ao criar um objeto e chamar uma das funções
-   * 'seno', 'cosseno', 'ln' ou 'raiz', o valor calculado automa-
-   * ticamente substitui o valor padronizado mais próximo. Este
-   * valor, uma vez substituído, aparece com um asterisco (*) ao
-   * lado do valor no relatório.
-   */
-  
-  TesteDeDesempenho testeGeral = new TesteDeDesempenho();
-  /*   O objeto 'testeGeral', também da classe 'TesteDeDesempenho',
-   * serve para permitir, por meio desta classe, imprimir também
-   * o relatório padrão com os valores pré-definidos, enquanto o
-   * outro objeto imrpime apenas o normal.
-  
   void carregaEpsilon (double e) 
   //Método usado para o usuário definir quantas casas decimais de precisão ele quer nas contas.
   // No caso de não ser chamado, definimos, por padrão, o 'epsilon' com o valor 10e-8 (0.00000001)
@@ -138,7 +119,6 @@ class FunçõesMatemáticas
       termo = -termo*x*x/(n*(n-1));
     }
     
-    carregaValorDaFunçãoParaRelatório(x, 0);
     return seno;
   }
   
@@ -167,7 +147,6 @@ class FunçõesMatemáticas
       // Alterado o "*x" nessa linha, de acordo com a correção do professor postada no Paca.
     }
 
-    carregaValorDaFunçãoParaRelatório(x, 1);
     return cosseno;
   }
    
@@ -215,7 +194,6 @@ class FunçõesMatemáticas
       // forma do termo geral
     }
     
-    carregaValorDaFunçãoParaRelatório(x, 2);
     return ln;
   }
   
@@ -264,7 +242,6 @@ class FunçõesMatemáticas
       termo = termo * (-1) * (2*n + 1) * (2*n + 2) * (1-2*n) * x / ((-1-2*n) * (n+1) * (n+1) * 4); 
     }
 
-    carregaValorDaFunçãoParaRelatório(x, 3);
     return raiz;
   }
   
@@ -301,179 +278,7 @@ class FunçõesMatemáticas
       termo = -termo*x*x/(n*(n-1));
     }
     
-    carregaValorDaFunçãoParaRelatório(x, 4);
     return seno;
-  }
-  
-  
-  
-  void carregaValorDaFunçãoParaRelatório(double valor, int tipo)
-    // O tipo 0 representa a função seno; o tipo 1, a cosseno;
-    // o tipo 2, o ln; o tipo 3, a raiz; e o tipo 4, a função
-    // seno calculada com variáveis 'float'.
-  {
-    double tempoInicial = 0;
-    double tempoFinal = 0;
-    teste.imprimeRelatórioGeralDeTempos();
-    teste.imprimeComparativoDeSenos();
-    
-    if(tipo == 0)
-    {
-      tempoInicial = System.nanoTime() / 10e6;
-      sen(valor);
-      tempoFinal = System.nanoTime() / 10e6;
-    }
-    if(tipo == 1)
-    {
-      tempoInicial = System.nanoTime() / 10e6;
-      cos(valor);
-      tempoFinal = System.nanoTime() / 10e6;
-    }
-    if(tipo == 2)
-    {
-      tempoInicial = System.nanoTime() / 10e6;
-      ln(valor);
-      tempoFinal = System.nanoTime() / 10e6;
-    }
-    if(tipo == 3)
-    {
-      tempoInicial = System.nanoTime() / 10e6;
-      raiz(valor);
-      tempoFinal = System.nanoTime() / 10e6;
-    }
-    if(tipo == 4)
-    {
-      tempoInicial = System.nanoTime() / 10e6;
-      senFloat((float) valor);
-      tempoFinal = System.nanoTime() / 10e6;
-    }
-    
-    double tempoDeExecução = tempoFinal - tempoInicial;
-    
-    for(int i=0; i < teste.tempos.length; i++)
-    {
-      double diferença = tempoDeExecução*tempoDeExecução - teste.tempos[0][tipo]*teste.tempos[0][tipo];
-      if(tempoDeExecução*tempoDeExecução - teste.tempos[i][tipo]*teste.tempos[i][tipo] < diferença)
-        diferença = tempoDeExecução*tempoDeExecução - teste.tempos[i][tipo]*teste.tempos[i][tipo];
-      
-      for(int j=0; diferença != tempoDeExecução*tempoDeExecução - teste.tempos[j][tipo]*teste.tempos[j][tipo]; j++)
-        teste.tempos[j][tipo] = valor;
-    }
-    
-  } // void carregaValorDaFunçãoParaRelatório(double valor, int tipo)
-  
-  
-  
-  void executaCarregamentos()
-  {
-    teste.carregaTemposSeno();
-    teste.carregaTemposCosseno();
-    teste.carregaTemposLogaritmo();
-    teste.carregaTemposRaiz();
-    teste.estatísticas();
-    
-    testeGeral.carregaTemposSeno();
-    testeGeral.carregaTemposCosseno();
-    testeGeral.carregaTemposLogaritmo();
-    testeGeral.carregaTemposRaiz();
-    testeGeral.estatísticas();
-  }
-  
-  void imprimeRelatórioDeTempos()
-  {
-    executaCarregamentos();
-    String[] funções = {"seno", "cosseno", "logaritmo natural", "raiz"};
-    
-    System.out.println("Relatório de Desempenho das Funções Matemáticas com Séries de Taylor");
-    System.out.println();
-    
-    
-    for(int i = 0; i < funções.length; i++)
-    {
-      System.out.println("Função " + funções[i] + ":");
-      System.out.println();
-      
-      System.out.println("A função " + funções[i] + " teve os seguintes valores de teste: ");
-      
-      for(int j = 0; j <= teste.tempos.length; j++)
-      {
-        if(teste.tempos[j][i] != testeGeral.tempos[j][i])
-          System.out.print((j+1) + "*: " + teste.tempos[j][i] + " ms          ");
-        else
-          System.out.print((j+1) + ": " + teste.tempos[j][i] + " ms          ");
-      }
-        
-      System.out.println();
-      System.out.println("Média das medições: " + teste.estatísticas[i][0]);
-      System.out.println("Desvio-padrão das medições: " + teste.estatísticas[i][1]);
-      
-      if(i < 3)
-        System.out.println();
-    }
-    
-  }
-  
-  
-  
-  void imprimeComparativoDeSenos()
-  {
-    executaCarregamentos();
-    double[] ganhoMédio = new double[100];
-    for(int i=0; i < ganhoMédio.length; i++)
-      ganhoMédio[i] = (teste.tempos[i][4] * 100) / teste.tempos[i][0]; // Multiplica-se por 100 para obter a porcentagem
-    
-    
-    System.out.println("Relatório Comparativo das Funções Seno e Cosseno Calculadas com Variáveis Double e Float");
-    System.out.println();
-    
-    for(int j = 0; j < teste.tempos.length; j++)
-    {
-      if(testeGeral.tempos[j][0] != teste.tempos[j][0])
-      {
-        System.out.println("Double(" + (j+1) + ")*: " + teste.tempos[j][0] + " ms          Float(" + (j+1) + "): " + teste.tempos[j][4] + " ms");
-        System.out.println("Ganho médio para o teste " + (j+1) + ": " + ganhoMédio[j] + " %");
-        System.out.println();
-      }
-      else if(testeGeral.tempos[j][4] != teste.tempos[j][4])
-      {
-        System.out.println("Double(" + (j+1) + "): " + teste.tempos[j][0] + " ms          Float(" + (j+1) + ")*: " + teste.tempos[j][4] + " ms");
-        System.out.println("Ganho médio para o teste " + (j+1) + ": " + ganhoMédio[j] + " %");
-        System.out.println();
-      }
-      else if(testeGeral.tempos[j][0] != teste.tempos[j][0] && testeGeral.tempos[j][4] != teste.tempos[j][4])
-      {
-        System.out.println("Double(" + (j+1) + ")*: " + teste.tempos[j][0] + " ms          Float(" + (j+1) + ")*: " + teste.tempos[j][4] + " ms");
-        System.out.println("Ganho médio para o teste " + (j+1) + ": " + ganhoMédio[j] + " %");
-        System.out.println();
-      }
-      else
-      {
-        System.out.println("Double(" + (j+1) + "): " + teste.tempos[j][0] + " ms          Float(" + (j+1) + "): " + teste.tempos[j][4] + " ms");
-        System.out.println("Ganho médio para o teste " + (j+1) + ": " + ganhoMédio[j] + " %");
-        System.out.println();
-      }
-    }
-    
-    System.out.println("Média do seno com double: " + teste.estatísticas[0][0] + ";");
-    System.out.println("Média do seno com float: " + teste.estatísticas[4][0] + ".");
-    System.out.println("Ganho médio do uso de float no lugar de double em relação à média: " + teste.estatísticas[4][0] * 100 / teste.estatísticas[0][0]);
-    System.out.println();
-    
-    System.out.println("Desvio-padrão do seno com double: " + teste.estatísticas[0][1] + ";");
-    System.out.println("Desvio-padrão do seno com float: " + teste.estatísticas[4][1] + ".");
-    System.out.println("Ganho médio do uso de float no lugar de double em relação ao desvio-padrão: " + teste.estatísticas[4][0] * 100 / teste.estatísticas[0][0]);
-  }
-    
-  
-  
-  void imprimeRelatórioDeTemposPadrão()
-  {
-    teste.imprimeRelatórioGeralDeTempos();
-  }
-  
-  void imprimeComparativoDeSenosPadrão()
-  {
-    teste.imprimeComparativoDeSenos();
-  }
+  } // float senFloat(float x)
   
 } // class FunçõesMat 
