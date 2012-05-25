@@ -90,8 +90,7 @@ class FunçõesMatemáticas
     
     if(x >= 2*pi)
     { // Para sen/cos maiores que 2 pi
-      for(int i = 0; x >= 2*pi; i++)
-        x -= 2*pi;
+      x = x % 2*pi;
     }
     return x;
   }
@@ -115,8 +114,7 @@ class FunçõesMatemáticas
       // forme o polinômio de Taylor para o seno.
     {
       seno = seno + termo;
-      n = n + 2;
-      termo = -termo*x*x/(n*(n-1));
+      termo = -termo*x*x/((n+1)*(n+2));
     }
     
     return seno;
@@ -142,8 +140,7 @@ class FunçõesMatemáticas
       // forme o polinômio de Taylor para o seno.
     {
       cosseno = cosseno + termo;
-      n = n + 2;
-      termo = -termo*x*x/n; 
+      termo = -termo*x*x/((n+1)*(n+2)); 
       // Alterado o "*x" nessa linha, de acordo com a correção do professor postada no Paca.
     }
 
@@ -268,14 +265,13 @@ class FunçõesMatemáticas
                       // de 'x' - os outros a partir deste serão calculados
                       // com base neste primeiro termo
        
-    for (int n=1; (termo*termo) >= (epsilon * epsilon); n=n+2) 
+    for (int n=1; (termo*termo) >= (epsilon * epsilon); n+=2) 
       // 'n' define os expoentes de potência e o valor do fato-
       // rial. Começa por 1 para mantê-los sempre ímpares, con-
       // forme o polinômio de Taylor para o seno.
     {
       seno = seno + termo;
-      n = n + 2;
-      termo = -termo*x*x/(n*(n-1));
+      termo = -termo*x*x/((n+1)*(n+2));
     }
     
     return seno;
