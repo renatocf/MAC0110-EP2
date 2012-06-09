@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>files</key>
+	<dict>
+		<key>Resources/Installer Tome 1.MPQ</key>
+		<data>
+		iC2dHlobk3W/EdHdsuuoxDmga4Y=
+		</data>
+		<key>Resources/MainMenu.nib</key>
+		<data>
+		NN/HPVycCAhoES0kmwBV80dRFuM=
+		</data>
+		<key>Resources/d3.png</key>
+		<data>
+		23m1sPmMwXA7prGuk8PHgGBpMMo=
+		</data>
+		<key>Resources/d3icon.icns</key>
+		<data>
+		XYkogBonmTtTrILbr3Fu7+veamY=
+		</data>
+	</dict>
+	<key>rules</key>
+	<dict>
+		<key>^Resources/</key>
+		<true/>
+		<key>^Resources/.*\.lproj/</key>
+		<dict>
+			<key>optional</key>
+			<true/>
+			<key>weight</key>
+			<real>1000</real>
+		</dict>
+		<key>^Resources/.*\.lproj/locversion.plist$</key>
+		<dict>
+			<key>omit</key>
+			<true/>
+			<key>weight</key>
+			<real>1100</real>
+		</dict>
+		<key>^version.plist$</key>
+		<true/>
+	</dict>
+</dict>
+</plist>
